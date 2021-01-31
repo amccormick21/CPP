@@ -9,6 +9,8 @@ class GameController {
         GameController();
         ~GameController();
 
-        void MakeMove(const Move *);
+        bool MakeMove(const Move *);
+        Move GetMoveInput();
         void ResetGame();
+        bool Play();
 };
