@@ -11,7 +11,7 @@ Grid::Grid(Grid::grid_size_t gridSize)
     this->nMaxValues = pow(gridSize, 2);
     this->values = vector<grid_element_t>(this->nMaxValues, grid_element_t(0));
     this->generator = default_random_engine(0);
-    this->valueDistribution = uniform_real_distribution(0.0f, 1.0f);
+    this->valueDistribution = uniform_real_distribution<float>(0.0f, 1.0f);
 }
 
 Grid::~Grid()
@@ -88,7 +88,7 @@ void Grid::AddValue()
 Grid::grid_size_t Grid::GetRandomLocation()
 {
     int nFree = this->nMaxValues - this->nValues;
-    uniform_int_distribution locationDistribution(0, nFree-1);
+    uniform_int_distribution<int> locationDistribution(0, nFree-1);
     return locationDistribution(generator);
 }
 
