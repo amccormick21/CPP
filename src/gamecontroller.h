@@ -9,8 +9,8 @@ class GameController {
         GameController();
         ~GameController();
 
-        bool MakeMove(const Move *);
-        Move GetMoveInput();
+        bool MakeMove(const Direction);
+        Direction GetMoveInput();
         void ResetGame();
         bool Play();
 };

@@ -12,10 +12,11 @@ Game::~Game()
     delete[] this->grid;
 }
 
-void Game::MakeMove(const Move* move)
+void Game::MakeMove(const Direction move)
 {
     score_t moveScore = score_t(0);
-
+    moveScore = this->grid->MoveGrid(move);
+    this->grid->AddValue();
     this->score += moveScore;
 }
 
@@ -23,9 +24,6 @@ void Game::Reset()
 {
     this->score = score_t(0);
     this->GameOver = false;
-
-    // if (this->grid)
-    //     delete[] this->grid;
 
     this->grid = new Grid(Grid::grid_size_t(4));
 }

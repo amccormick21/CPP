@@ -1,4 +1,6 @@
+#include "../include/stdafx.h"
 #include "gridelement.cpp"
+#include "score.cpp"
 #include <vector>
 #include <cstdint>
 #include <random>
@@ -16,7 +18,10 @@ class Grid {
         Grid(const grid_size_t);
         ~Grid();
 
-        std::string DisplayElement(grid_element_t);
+        score_t MoveGrid(const Direction);
+        void AddValue();
+
+        string DisplayElement(grid_element_t);
         void DisplayGrid();
         void Initialise();
 
@@ -24,7 +29,9 @@ class Grid {
 
         grid_size_t GetRandomLocation();
         grid_element_t GetRandomValue();
-        void AddValue();
+
+        vector<grid_element_t *> GetRow(Direction, grid_size_t);
+        score_t MoveRow(vector<grid_element_t *>);
 
         default_random_engine generator;
         uniform_real_distribution<float> valueDistribution;

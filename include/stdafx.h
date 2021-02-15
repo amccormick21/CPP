@@ -1,3 +1,3 @@
 #pragma once
-#include "../src/move.h"
+#include "../src/direction.cpp"
 #include <string.h>

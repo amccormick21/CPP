@@ -1,5 +1,4 @@
 #include "../include/stdafx.h"
-#include "score.cpp"
 #include "grid.h"
 
 class Game {
@@ -16,5 +15,5 @@ class Game {
         void Reset();
         void Display();
         void StartNew();
-        void MakeMove(const Move *);
+        void MakeMove(const Direction);
 };

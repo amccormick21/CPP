@@ -85,6 +85,108 @@ void Grid::AddValue()
     this->nValues++;
 }
 
+score_t Grid::MoveGrid(const Direction direction)
+{
+    score_t score{0};
+    vector<grid_element_t *> row;
+    for (auto i = 0; i < this->gridSize; i++)
+    {
+        row = this->GetRow(direction, i);
+        score += this->MoveRow(row);
+    }
+    return score;
+
+}
+
+vector<grid_element_t *> Grid::GetRow(const Direction direction, grid_size_t nRowID)
+{
+    vector<grid_element_t *> rowPtrs;
+
+    grid_size_t startIndex{0};
+    grid_size_t increment{0};
+
+    switch (direction)
+    {
+        case Direction::left:
+            startIndex = 0 + this->gridSize * nRowID;
+            increment = 1;
+            break;
+        case Direction::up:
+            startIndex = 0 + nRowID;
+            increment = this->gridSize;
+            break;
+        case Direction::right:
+            startIndex = (this->gridSize-1) + this->gridSize * nRowID;
+            increment = -1;
+            break;
+        case Direction::down:
+            startIndex = this->gridSize * (this->gridSize-1) + nRowID;
+            increment = -this->gridSize;
+            break;
+    }
+
+    grid_element_t * elementPtr;
+    for (auto i = 0; i < this->gridSize; i++)
+    {
+        elementPtr = &this->values[0] + startIndex + i * increment;
+        rowPtrs.push_back(elementPtr);
+    }
+
+    return rowPtrs;
+}
+
+score_t Grid::MoveRow(vector<grid_element_t *> row)
+{
+    grid_size_t lastNonzeroLocation;
+    grid_element_t lastNonzeroValue{*row[0]};
+    bool lastNonzeroValueHasCombined{false};
+
+    score_t score{0};
+
+    // Check the first element - the first element is a special case as it will never combine
+    if (*row[0] != 0)
+    {
+        lastNonzeroLocation = 0;
+    }
+    else
+    {
+        lastNonzeroLocation = -1;
+    }    
+
+    // From start to end of array
+    for (auto i = 1; i < this->gridSize; i++)
+    {
+        if ((*row[i] == lastNonzeroValue) && (!lastNonzeroValueHasCombined) && (lastNonzeroValue != 0))
+        {
+            // Combine
+            *row[lastNonzeroLocation] += *row[i];
+            lastNonzeroValueHasCombined = true;
+            score += *row[lastNonzeroLocation];
+            lastNonzeroValue = grid_element_t{0};
+            *row[i] = grid_element_t{0};
+
+            // Because we have combined, there is one fewer cell on the board
+            this->nValues--;
+        }
+        else if (*row[i] != 0)
+        {
+            // Update last nonzero location plus one
+            lastNonzeroLocation += 1;
+            lastNonzeroValue = *row[i];
+            lastNonzeroValueHasCombined = false;
+            
+            // Reset the source value if the element has moved
+            if (lastNonzeroLocation != i)
+            {
+                *row[lastNonzeroLocation] = *row[i];
+                *row[i] = grid_element_t{0};
+            }
+        }
+    }
+
+    return score;
+}
+
 Grid::grid_size_t Grid::GetRandomLocation()
 {
     int nFree = this->nMaxValues - this->nValues;
