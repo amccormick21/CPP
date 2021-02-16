@@ -44,13 +44,12 @@ std::string Grid::DisplayElement(grid_element_t element)
     
 }
 
-void Grid::DisplayGrid()
+void Grid::DisplayGrid(score_t score)
 {
     int location(0);
     for (int row = 0; row < this->gridSize; row++)
     {
-        // Line start:
-        std::cout << "    ";
+        // Line start
         for (int col = 0; col < this->gridSize; col++)
         {
             std::cout << DisplayElement(this->values[location++]);
@@ -59,6 +58,8 @@ void Grid::DisplayGrid()
         // Line end
         std::cout << endl;
     }
+    std::cout << endl;
+    std::cout << "Score: " << score << endl;
 }
 
 void Grid::AddValue()

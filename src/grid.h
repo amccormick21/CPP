@@ -22,7 +22,7 @@ class Grid {
         void AddValue();
 
         string DisplayElement(grid_element_t);
-        void DisplayGrid();
+        void DisplayGrid(score_t);
         void Initialise();
 
     private:

@@ -42,7 +42,7 @@ void Game::Display()
     std::cout << "____________________________" << endl;
     std::cout << endl;
 
-    this->grid->DisplayGrid();
+    this->grid->DisplayGrid(this->score);
 
     std::cout << "____________________________" << endl;
     std::cout << "Enter Move:" << endl;
