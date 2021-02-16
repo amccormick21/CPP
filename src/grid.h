@@ -25,13 +25,16 @@ class Grid {
         void DisplayGrid(score_t);
         void Initialise();
 
+        bool CheckValidMove(const Direction);
+        static bool CanRowMove(vector<grid_element_t *>, const Direction);
+
     private:
 
         grid_size_t GetRandomLocation();
         grid_element_t GetRandomValue();
 
         vector<grid_element_t *> GetRow(Direction, grid_size_t);
-        score_t MoveRow(vector<grid_element_t *>);
+        static score_t MoveRow(vector<grid_element_t *>);
 
         default_random_engine generator;
         uniform_real_distribution<float> valueDistribution;

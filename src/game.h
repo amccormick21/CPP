@@ -1,5 +1,6 @@
 #include "../include/stdafx.h"
 #include "grid.h"
+#include <map>
 
 class Game {
 
@@ -7,6 +8,7 @@ class Game {
         score_t score;
         Grid * grid;
         bool GameOver;
+        std::map<Direction, bool> ValidMove;
 
         Game();
         ~Game();
@@ -15,5 +17,6 @@ class Game {
         void Reset();
         void Display();
         void StartNew();
-        void MakeMove(const Direction);
+        void CheckValidMove();
+        bool MakeMove(const Direction);
 };

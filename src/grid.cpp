@@ -62,6 +62,20 @@ void Grid::DisplayGrid(score_t score)
     std::cout << "Score: " << score << endl;
 }
 
+bool Grid::CheckValidMove(const Direction direction)
+{
+    // Check the move in a given direction to see if anything actually happens
+    bool canMove{false};
+    vector<grid_element_t *> row;
+    for (auto i = 0; i < this->gridSize; i++)
+    {
+        row = this->GetRow(direction, i);
+        canMove |= Grid::CanRowMove(row);
+    }
+    return canMove;
+
+}
+
 void Grid::AddValue()
 {
     auto value = GetRandomValue();
@@ -201,4 +215,31 @@ grid_element_t Grid::GetRandomValue()
         return 4;
     else
         return 2;
+}
+
+bool Grid::CanRowMove(vector<grid_element_t*> row)
+{
+    bool foundZero{false};
+    bool doubledValue{false};
+    grid_element_t lastValue{0};
+
+    for (int i = 0; i < row.size(); i++)
+    {
+        if (*row[i] == 0)
+        {
+            foundZero = true;
+            break;
+        }
+        else if (*row[i] == lastValue)
+        {
+            doubledValue = true;
+            break;
+        }
+        else
+        {
+            lastValue = *row[i];
+        }
+   }
+
+   return (foundZero || doubledValue);
 }

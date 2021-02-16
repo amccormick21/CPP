@@ -64,7 +64,11 @@ Direction GameController::GetMoveInput()
 
 bool GameController::MakeMove(const Direction move)
 {
-    this->game->MakeMove(move);
+    if (!this->game->MakeMove(move))
+    {
+        std::cout << "Invalid move, grid not adjusted" << endl;
+    }
+        
     return this->game->GameOver;
 }
 
