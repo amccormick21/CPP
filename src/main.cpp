@@ -7,10 +7,21 @@ using namespace std;
 
 void gameplayLoop()
 {
+	bool playAgain{true};
 	auto game = new GameController();
+	cin.clear();
 
-	game->ResetGame();
-	game->Play();
+	while (playAgain)
+	{
+		game->ResetGame();
+		game->Play();
+
+		cout << "PLAY AGAIN? (Y/N)" << endl;
+		char selection;
+		cin >> selection;
+
+		playAgain = (selection == 'y') || (selection == 'Y');
+	}
 }
 
 int main(int argc, char *argv[])
@@ -35,8 +46,6 @@ int main(int argc, char *argv[])
 		default:
 			cout << "Invalid Selection" << endl;
 	}
-
-	cin.get();
 
 	return 0;
 }

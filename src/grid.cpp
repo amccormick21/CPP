@@ -221,6 +221,7 @@ bool Grid::CanRowMove(vector<grid_element_t*> row)
 {
     bool foundZero{false};
     bool doubledValue{false};
+    bool foundValueAfterZero{false};
     grid_element_t lastValue{0};
 
     for (int i = 0; i < row.size(); i++)
@@ -228,11 +229,15 @@ bool Grid::CanRowMove(vector<grid_element_t*> row)
         if (*row[i] == 0)
         {
             foundZero = true;
-            break;
         }
         else if (*row[i] == lastValue)
         {
             doubledValue = true;
+            break;
+        }
+        else if (*row[i] != 0 && foundZero)
+        {
+            foundValueAfterZero = true;
             break;
         }
         else
@@ -241,5 +246,5 @@ bool Grid::CanRowMove(vector<grid_element_t*> row)
         }
    }
 
-   return (foundZero || doubledValue);
+   return (foundValueAfterZero || doubledValue);
 }

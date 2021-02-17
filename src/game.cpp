@@ -12,16 +12,18 @@ Game::~Game()
     delete[] this->grid;
 }
 
-void Game::CheckValidMove()
+bool Game::CheckValidMove()
 {
-    // TODO: array looping properly
-    for (const auto dir = { Direction::left, Direction::up, Direction::right, Direction::down }; )
+    bool foundValidMove{false};
+    for (const auto dir : Directions::Directions )
     {
         this->ValidMove[dir] = this->grid->CheckValidMove(dir);
+        foundValidMove |= this->ValidMove[dir];
     }
+    return foundValidMove;
 }
 
-void Game::MakeMove(const Direction move)
+bool Game::MakeMove(const Direction move)
 {
     bool validMove = this->ValidMove[move];
     if (validMove)
@@ -30,7 +32,7 @@ void Game::MakeMove(const Direction move)
         moveScore = this->grid->MoveGrid(move);
         this->grid->AddValue();
         this->score += moveScore;
-        CheckValidMove();
+        this->GameOver = !Game::CheckValidMove();
     }
     return validMove;
 }

@@ -17,6 +17,6 @@ class Game {
         void Reset();
         void Display();
         void StartNew();
-        void CheckValidMove();
+        bool CheckValidMove();
         bool MakeMove(const Direction);
 };

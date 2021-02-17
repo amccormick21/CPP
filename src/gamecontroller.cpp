@@ -86,5 +86,10 @@ bool GameController::Play()
         gameOver = MakeMove(direction);
     }
     
+    std::cout << "GAME OVER" << endl;
+    std::cout << "_________" << endl;
+    
+    this->game->Display();
+    
     return gameOver;
 }
